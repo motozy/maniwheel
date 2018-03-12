@@ -164,7 +164,7 @@ function prepareCanvas(texture)
             // パーティクルの回転と拡大
             var scale = Math.max(-currentSpeed * 100, 0);
             particles.rotation.y = mesh.rotation.y / 16;
-            particles.scale.set(800, 20, 800);
+            particles.scale.set(800, 50, 800);
             particleMaterial.size = scale * 100;
             particleMaterial.opacity = Math.min(1, scale * scale);
 
