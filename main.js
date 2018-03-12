@@ -99,6 +99,27 @@ function prepareCanvas(texture)
       var material = new THREE.MeshPhongMaterial( {  map: texture["map"], bumpMap: texture["bumpMap"] } );
       var mesh = new THREE.Mesh( geometry, material );
       
+      // 絵恋ちゃんパーティクル
+      var particles;
+      var particleMaterial;
+      {
+            const particleGeometry = new THREE.Geometry();
+            for (let i = 0; i < 256; i++) {
+                  particleGeometry.vertices.push(new THREE.Vector3(
+                        (Math.random() - 0.5),
+                        (Math.random() - 0.5),
+                        (Math.random() - 0.5),
+                  ));
+            }
+            particleMaterial = new THREE.PointCloudMaterial({
+                  map: texture["erenchan"],
+                  size: 32,
+                  blending: THREE.AdditiveBlending,
+                  transparent: true
+                });
+            particles = new THREE.Points(particleGeometry, particleMaterial);
+      }
+
       // 光源
       var light = new THREE.DirectionalLight(0xf0f0f0);
       light.position.set(1, 1, 1).normalize();
@@ -110,6 +131,7 @@ function prepareCanvas(texture)
       var scene = new THREE.Scene();
       scene.add( camera );
       scene.add( mesh );
+      scene.add( particles );
       scene.add( light );
       scene.add( lightAmbient );
 
@@ -138,6 +160,13 @@ function prepareCanvas(texture)
                   }
                   currentSpeed *= 0.99;
             }
+
+            // パーティクルの回転と拡大
+            var scale = Math.max(-currentSpeed * 100, 0);
+            particles.rotation.y = mesh.rotation.y / 16;
+            particles.scale.set(800, 20, 800);
+            particleMaterial.size = scale * 100;
+            particleMaterial.opacity = Math.min(1, scale * scale);
 
             // 回数（角度から計算）
             var pos = Math.floor(-mesh.rotation.y * 3 / (2 * Math.PI));
@@ -177,6 +206,7 @@ function textureLoader(texturePaths, callback) {
 
 function maniWheel(){
       const paths = {
+            erenchan: "./erenchan.png",
             map: "./erenchan_map.png",
             bumpMap: "./erenchan_bumpMap.png"
       };
