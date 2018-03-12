@@ -33,3 +33,13 @@ body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-shadow: 0px 0px 8px #4444ff;
 }
+
+
+#counter.waiting {
+    animation: counter-waiting 1s infinite;
+}
+
+@keyframes counter-waiting {
+    0% { transform: scale(1) translateX(0px); }
+    50% { transform: scale(1.5) translateX(-50px); }
+}

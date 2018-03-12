@@ -139,9 +139,16 @@ function prepareCanvas(texture)
                   currentSpeed *= 0.99;
             }
 
-            // 回数
-            var count = Math.floor((-mesh.rotation.y * 3 / (2 * Math.PI)) - 2);
-            counter.innerText = count > 0 ? count : "👈";
+            // 回数（角度から計算）
+            var pos = Math.floor(-mesh.rotation.y * 3 / (2 * Math.PI));
+            if(pos > 0){
+                  var count = Math.max(pos - 2, 0);
+                  counter.innerText = count;
+                  counter.className = "";
+            }else{
+                  counter.innerText = "👈";
+                  counter.className = "waiting";
+            }
             
             lastTimestamp = timestamp;
             renderer.render( scene, camera );
