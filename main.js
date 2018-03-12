@@ -133,6 +133,9 @@ function prepareCanvas(texture)
                   // 惰性
                   mesh.rotation.x = mesh.rotation.x * 0.9;
                   mesh.rotation.y = mesh.rotation.y + currentSpeed * dt;
+                  if(mesh.rotation.y > 0){
+                        mesh.rotation.y *= 0.9;
+                  }
                   currentSpeed *= 0.99;
             }
 
