@@ -153,12 +153,13 @@ function prepareCanvas(texture)
                   mesh.rotation.y = mesh.rotation.y + dy;
             }else{
                   // 惰性
+                  var frames = dt / 16.66; // 1フレーム[ms]@60fps
+                  currentSpeed *= Math.pow(0.99, frames);
                   mesh.rotation.x = mesh.rotation.x * 0.9;
                   mesh.rotation.y = mesh.rotation.y + currentSpeed * dt;
                   if(mesh.rotation.y > 0){
-                        mesh.rotation.y *= 0.9;
+                        mesh.rotation.y *= Math.pow(0.8, frames);
                   }
-                  currentSpeed *= 0.99;
             }
 
             // パーティクルの回転と拡大
